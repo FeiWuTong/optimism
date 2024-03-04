@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	celestia "github.com/ethereum-optimism/optimism/op-celestia"
+	memo "github.com/ethereum-optimism/optimism/op-memo"
 	"github.com/ethereum-optimism/optimism/op-node/chaincfg"
 	openum "github.com/ethereum-optimism/optimism/op-service/enum"
 	oplog "github.com/ethereum-optimism/optimism/op-service/log"
@@ -320,7 +320,7 @@ var Flags []cli.Flag
 func init() {
 	optionalFlags = append(optionalFlags, P2PFlags(EnvVarPrefix)...)
 	optionalFlags = append(optionalFlags, oplog.CLIFlags(EnvVarPrefix)...)
-	optionalFlags = append(optionalFlags, celestia.CLIFlags(EnvVarPrefix)...)
+	optionalFlags = append(optionalFlags, memo.CLIFlags(EnvVarPrefix)...)
 	Flags = append(requiredFlags, optionalFlags...)
 }
 

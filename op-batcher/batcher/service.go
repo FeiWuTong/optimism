@@ -16,7 +16,7 @@ import (
 
 	"github.com/ethereum-optimism/optimism/op-batcher/metrics"
 	"github.com/ethereum-optimism/optimism/op-batcher/rpc"
-	celestia "github.com/ethereum-optimism/optimism/op-celestia"
+	memo "github.com/ethereum-optimism/optimism/op-memo"
 	"github.com/ethereum-optimism/optimism/op-node/rollup"
 	"github.com/ethereum-optimism/optimism/op-service/cliapp"
 	"github.com/ethereum-optimism/optimism/op-service/dial"
@@ -64,7 +64,7 @@ type BatcherService struct {
 	stopped atomic.Bool
 
 	NotSubmittingOnStart bool
-	DAClient             *celestia.DAClient
+	DAClient             *memo.DAClient
 }
 
 // BatcherServiceFromCLIConfig creates a new BatcherService from a CLIConfig.
@@ -264,7 +264,7 @@ func (bs *BatcherService) initRPCServer(cfg *CLIConfig) error {
 }
 
 func (bs *BatcherService) initDA(cfg *CLIConfig) error {
-	client, err := celestia.NewDAClient(cfg.DaConfig.DaRpc)
+	client, err := memo.NewDAClient(cfg.DaConfig.DaRpc)
 	if err != nil {
 		return err
 	}

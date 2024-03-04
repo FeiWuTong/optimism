@@ -16,7 +16,7 @@ import (
 	"github.com/ethereum/go-ethereum/log"
 
 	"github.com/ethereum-optimism/optimism/op-batcher/metrics"
-	celestia "github.com/ethereum-optimism/optimism/op-celestia"
+	memo "github.com/ethereum-optimism/optimism/op-memo"
 	"github.com/ethereum-optimism/optimism/op-node/rollup"
 	"github.com/ethereum-optimism/optimism/op-node/rollup/derive"
 	"github.com/ethereum-optimism/optimism/op-service/eth"
@@ -48,7 +48,7 @@ type DriverSetup struct {
 	L2Client      L2Client
 	RollupClient  RollupClient
 	ChannelConfig ChannelConfig
-	DAClient      *celestia.DAClient
+	DAClient      *memo.DAClient
 }
 
 // BatchSubmitter encapsulates a service responsible for submitting L2 tx
@@ -348,10 +348,10 @@ func (l *BatchSubmitter) sendTransaction(txdata txData, queue *txmgr.Queue[txDat
 	ids, _, err := l.DAClient.Client.Submit(ctx, [][]byte{data}, -1)
 	cancel()
 	if err == nil && len(ids) == 1 {
-		l.Log.Info("celestia: blob successfully submitted", "id", hex.EncodeToString(ids[0]))
-		data = append([]byte{celestia.DerivationVersionCelestia}, ids[0]...)
+		l.Log.Info("memo: blob successfully submitted", "id", hex.EncodeToString(ids[0]))
+		data = append([]byte{memo.DerivationVersionMemo}, ids[0]...)
 	} else {
-		l.Log.Info("celestia: blob submission failed; falling back to eth", "err", err)
+		l.Log.Info("memo: blob submission failed; falling back to eth", "err", err)
 	}
 
 	intrinsicGas, err := core.IntrinsicGas(data, nil, false, true, true, false)

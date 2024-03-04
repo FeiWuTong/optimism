@@ -75,6 +75,9 @@ op-program:
 	make -C ./op-program op-program
 .PHONY: op-program
 
+op-da:
+	make -C ./op-memo op-da
+
 cannon:
 	make -C ./cannon cannon
 .PHONY: cannon

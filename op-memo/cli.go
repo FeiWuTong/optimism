@@ -1,4 +1,4 @@
-package celestia
+package memo
 
 import (
 	"fmt"
@@ -21,7 +21,7 @@ func CLIFlags(envPrefix string) []cli.Flag {
 	return []cli.Flag{
 		&cli.StringFlag{
 			Name:    DaRpcFlagName,
-			Usage:   "dial address of data availability grpc client",
+			Usage:   "dial address of data availability http client",
 			Value:   defaultDaRpc,
 			EnvVars: opservice.PrefixEnvVar(envPrefix, "DA_RPC"),
 		},

@@ -1,12 +1,12 @@
 package driver
 
 import (
-	celestia "github.com/ethereum-optimism/optimism/op-celestia"
+	memo "github.com/ethereum-optimism/optimism/op-memo"
 	"github.com/ethereum-optimism/optimism/op-node/rollup/derive"
 )
 
-func SetDAClient(cfg celestia.Config) error {
-	client, err := celestia.NewDAClient(cfg.DaRpc)
+func SetDAClient(cfg memo.Config) error {
+	client, err := memo.NewDAClient(cfg.DaRpc)
 	if err != nil {
 		return err
 	}

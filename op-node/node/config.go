@@ -7,7 +7,7 @@ import (
 	"math"
 	"time"
 
-	celestia "github.com/ethereum-optimism/optimism/op-celestia"
+	memo "github.com/ethereum-optimism/optimism/op-memo"
 	"github.com/ethereum-optimism/optimism/op-node/flags"
 	"github.com/ethereum-optimism/optimism/op-node/p2p"
 	"github.com/ethereum-optimism/optimism/op-node/rollup"
@@ -65,7 +65,7 @@ type Config struct {
 	// [OPTIONAL] The reth DB path to read receipts from
 	RethDBPath string
 
-	DaConfig celestia.Config
+	DaConfig memo.Config
 }
 
 type RPCConfig struct {

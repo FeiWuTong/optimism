@@ -7,7 +7,7 @@ import (
 
 	"github.com/ethereum-optimism/optimism/op-batcher/compressor"
 	"github.com/ethereum-optimism/optimism/op-batcher/flags"
-	celestia "github.com/ethereum-optimism/optimism/op-celestia"
+	memo "github.com/ethereum-optimism/optimism/op-memo"
 	oplog "github.com/ethereum-optimism/optimism/op-service/log"
 	opmetrics "github.com/ethereum-optimism/optimism/op-service/metrics"
 	oppprof "github.com/ethereum-optimism/optimism/op-service/pprof"
@@ -61,7 +61,7 @@ type CLIConfig struct {
 	PprofConfig      oppprof.CLIConfig
 	CompressorConfig compressor.CLIConfig
 	RPC              oprpc.CLIConfig
-	DaConfig         celestia.CLIConfig
+	DaConfig         memo.CLIConfig
 }
 
 func (c *CLIConfig) Check() error {
@@ -107,6 +107,6 @@ func NewConfig(ctx *cli.Context) *CLIConfig {
 		PprofConfig:            oppprof.ReadCLIConfig(ctx),
 		CompressorConfig:       compressor.ReadCLIConfig(ctx),
 		RPC:                    oprpc.ReadCLIConfig(ctx),
-		DaConfig:               celestia.ReadCLIConfig(ctx),
+		DaConfig:               memo.ReadCLIConfig(ctx),
 	}
 }

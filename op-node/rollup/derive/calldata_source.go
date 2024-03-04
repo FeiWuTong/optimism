@@ -13,14 +13,14 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/log"
 
-	celestia "github.com/ethereum-optimism/optimism/op-celestia"
+	memo "github.com/ethereum-optimism/optimism/op-memo"
 	"github.com/ethereum-optimism/optimism/op-node/rollup"
 	"github.com/ethereum-optimism/optimism/op-service/eth"
 )
 
-var daClient *celestia.DAClient
+var daClient *memo.DAClient
 
-func SetDAClient(c *celestia.DAClient) error {
+func SetDAClient(c *memo.DAClient) error {
 	if daClient != nil {
 		return errors.New("da client already configured")
 	}
@@ -153,25 +153,25 @@ func DataFromEVMTransactions(config *rollup.Config, batcherAddr common.Address, 
 				out = append(out, data)
 			default:
 				switch data[0] {
-				case celestia.DerivationVersionCelestia:
-					log.Info("celestia: blob request", "id", hex.EncodeToString(tx.Data()))
+				case memo.DerivationVersionMemo:
+					log.Info("memo: blob request", "id", hex.EncodeToString(tx.Data()))
 					ctx, cancel := context.WithTimeout(context.Background(), 30*time.Duration(config.BlockTime)*time.Second)
 					blobs, err := daClient.Client.Get(ctx, [][]byte{data[1:]})
 					cancel()
 					if err != nil {
-						return nil, NewResetError(fmt.Errorf("celestia: failed to resolve frame: %w", err))
+						return nil, NewResetError(fmt.Errorf("memo: failed to resolve frame: %w", err))
 					}
 					if len(blobs) != 1 {
-						log.Warn("celestia: unexpected length for blobs", "expected", 1, "got", len(blobs))
+						log.Warn("memo: unexpected length for blobs", "expected", 1, "got", len(blobs))
 						if len(blobs) == 0 {
-							log.Warn("celestia: skipping empty blobs")
+							log.Warn("memo: skipping empty blobs")
 							continue
 						}
 					}
 					out = append(out, blobs[0])
 				default:
 					out = append(out, data)
-					log.Info("celestia: using eth fallback")
+					log.Info("memo: using eth fallback")
 				}
 			}
 		}

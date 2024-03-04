@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	celestia "github.com/ethereum-optimism/optimism/op-celestia"
+	memo "github.com/ethereum-optimism/optimism/op-memo"
 	"github.com/ethereum-optimism/optimism/op-node/chaincfg"
 	oppprof "github.com/ethereum-optimism/optimism/op-service/pprof"
 	"github.com/ethereum-optimism/optimism/op-service/sources"
@@ -106,7 +106,7 @@ func NewConfig(ctx *cli.Context, log log.Logger) (*node.Config, error) {
 		Sync:              *syncConfig,
 		RollupHalt:        haltOption,
 		RethDBPath:        ctx.String(flags.L1RethDBPath.Name),
-		DaConfig:          celestia.Config(celestia.ReadCLIConfig(ctx)),
+		DaConfig:          memo.Config(memo.ReadCLIConfig(ctx)),
 	}
 
 	if err := cfg.LoadPersisted(log); err != nil {
