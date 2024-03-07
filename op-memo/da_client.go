@@ -9,6 +9,7 @@ import (
 	"net/http"
 
 	"github.com/ethereum-optimism/optimism/op-service/eth"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 var (
@@ -128,7 +129,8 @@ func getObject(ctx context.Context, rpcaddr string, id string) ([]byte, error) {
 func putObject(ctx context.Context, rpcaddr string, data []byte) ([]byte, error) {
 	// init payload and request
 	payload := make(map[string]string)
-	payload["data"] = string(data)
+	hexdata := common.Bytes2Hex(data)
+	payload["data"] = hexdata
 	b, err := json.Marshal(payload)
 	if err != nil {
 		return nil, err

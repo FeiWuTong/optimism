@@ -6,10 +6,13 @@ import (
 	"fmt"
 
 	memo "github.com/ethereum-optimism/optimism/op-memo"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 var (
-	rpcaddr = flag.String("http", "localhost:15678", "middleware http rpc")
+	defaultData = "0x095ea7b30000000000000000000000000776b0a89b77163a33bb5f062f3a781f920adcf100000000000000000000000000000000000000000000000000005af3107a4000"
+	rpcaddr     = flag.String("http", "localhost:15678", "middleware http rpc")
+	testdata    = flag.String("data", defaultData, "test data for submission and retrieval")
 )
 
 func main() {
@@ -20,7 +23,7 @@ func main() {
 		return
 	}
 
-	data := [][]byte{}
+	data := [][]byte{common.FromHex(*testdata)}
 	ids, _, err := dac.Client.Submit(context.Background(), data, -1)
 	if err != nil {
 		fmt.Println(err)
